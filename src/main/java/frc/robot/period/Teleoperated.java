@@ -4,6 +4,7 @@ import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.networktables.NetworkTable;
 import frc.molib.Console;
 import frc.molib.buttons.Button;
+import frc.molib.buttons.ButtonManager;
 import frc.molib.dashboard.DashboardOptionBase;
 import frc.molib.dashboard.DashboardSelector;
 import frc.molib.hid.XboxController;
@@ -141,6 +142,9 @@ public class Teleoperated {
         mSelectedDriveStyle = dshDriveStyle.getSelected();
         mSelectedDriveSpeed = dshDriveSpeed.getSelected();
         mSelectedDriveRamping = dshDriveRamping.getSelected();
+
+        //Clear ButtonPresses
+        ButtonManager.clearFlags();
     }
 
     /**
@@ -204,10 +208,13 @@ public class Teleoperated {
             Chassis.enableCoastMode();
 
         //Loader Control
-        if(btnOperator_Intake.get() && Manipulator.isAtBottom())
+        if(btnOperator_Intake.get() && Manipulator.isAtBottom() && !Manipulator.isLoaded()) {
             Loader.enable_Intake();
-        else
+            Manipulator.enable_Outtake();
+        } else {
             Loader.disable_Intake();
+            Manipulator.disable_Outtake();
+        }
 
         //Manual Elevator Control
         if(btnOperator_Elevator_ManualUp.get()) {

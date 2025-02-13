@@ -129,20 +129,31 @@ public class Manipulator {
         disable_Outtake();
     }
 
-    //TODO: Finish writing Manipulator Comments
+    /** Disable all PID controls. */
     public static void disable_PIDs() { disable_ElevatorPID(); }
 
+    /** Disable PID control of the Elevator. */
     public static void disable_ElevatorPID() { pidElevator_Height.disable(); }
 
+    /** Stop the Elevator motor(s). <i>Does not disable PID control.</i> */
     public static void disable_Elevator() { setElevatorPower(0.0); }
 
+    /** Stop the Outtake motor(s).*/
     public static void disable_Outtake() { setOuttakePower(0.0); }
 
+    /**
+     * Read the current position of the Elevator.
+     * @return Height in inches
+     */
     public static double getHeight() { return mtrElevator.getPosition().getValueAsDouble(); }
+    /** Set Elevator position back to zero. */
     public static void resetHeight() { mtrElevator.setPosition(0.0); }
 
+    /** Reads true if the Elevator is fully raised. */
     public static boolean isAtTop() { return phoElevator_T.get(); }
+    /** Reads true if the Elevator is fully lowered. */
     public static boolean isAtBottom() { return phoElevator_B.get(); }
+    /** Reads true if there is a Coral game piece in place. */
     public static boolean isLoaded() { return phoLoaded.get(); }
 
     /**
@@ -153,7 +164,9 @@ public class Manipulator {
         mElevatorPower = power;
     }
 
+    /** Lower the Elevator with a predetermined power value. */
     public static void lowerElevator() { setElevatorPower(-0.10);}
+    /** Raise the Elevator with a predetermined power value. */
     public static void raiseElevator() { setElevatorPower(0.15);}
 
     /**

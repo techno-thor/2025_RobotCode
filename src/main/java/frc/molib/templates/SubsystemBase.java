@@ -1,6 +1,9 @@
 package frc.molib.templates;
 
-/** A Template for all Subsystem classes to ensure all basic functionality. */
+/** 
+ * A Template for all Subsystem classes to ensure basic functionality.
+ * <p>A project for another day.</p>
+ */
 public interface SubsystemBase {
     /** Call once at Robot startup. */
     public void init();

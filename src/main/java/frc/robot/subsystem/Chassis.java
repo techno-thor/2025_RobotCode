@@ -51,7 +51,7 @@ public class Chassis {
     //Constants
     private static final double GEAR_RATIO = 1.0 / 6.0;
     private static final double WHEEL_CIRCUMFERENCE = Math.PI * 4.0;
-    
+
     //Power Buffer Variables
     private static double mDrivePower_Left = 0.0;
     private static double mDrivePower_Right = 0.0;
@@ -122,17 +122,24 @@ public class Chassis {
         disable_Drive();
     }
 
-    //TODO: Finish writing Chassis Comments
+    /** Disable all PID control. */
     public static void disable_PIDs() { disable_DriveAnglePID(); disable_DriveDistancePID();}
+    /** Disable Drive Angle PID control. */
     public static void disable_DriveAnglePID() { pidDrive_Angle.disable(); }
+    /** Disable Drive Distance PID control. */
     public static void disable_DriveDistancePID() { pidDrive_Distance.disable(); }
 
+    /** Stop all Drive motors. <i>Does not disable PID control.</i> */
     public static void disable_Drive() { setDrivePower(0.0, 0.0); }
 
+    /** Reads the current angle of the Chassis. */
     public static double getAngle() { return gyrDrive.getAngle(); }
+    /** Reads how far the Chassis has driven. */
     public static double getDistance() { return mtrDrive_L1.getPosition().getValueAsDouble() * GEAR_RATIO * WHEEL_CIRCUMFERENCE; }
 
+    /** Set Angle back to zero. */
     public static void resetAngle() { gyrDrive.reset(); }
+    /** Set Distance back to zero. */
     public static void resetDistance() { mtrDrive_L1.setPosition(0.0); }
 
     /**
