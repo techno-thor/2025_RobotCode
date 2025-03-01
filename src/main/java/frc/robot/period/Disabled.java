@@ -8,7 +8,7 @@ public class Disabled {
 
     public static void init() {}
 
-    public static void onEnable() {
+    public static void start() {
         Robot.disableSubsystems();
         Chassis.enableCoastMode();
     }

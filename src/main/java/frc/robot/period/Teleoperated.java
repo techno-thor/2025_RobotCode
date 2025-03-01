@@ -135,7 +135,7 @@ public class Teleoperated {
     }
 
     /** Call once at the start of Teleoperated to pull currently selected options from the Dashboard. */
-    public static void onEnable() {
+    public static void start() {
         Console.printHeader("Teleoperated Enabled");
         
         //Pull Selector values

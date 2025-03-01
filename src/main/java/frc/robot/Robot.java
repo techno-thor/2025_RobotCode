@@ -45,13 +45,13 @@ public class Robot extends TimedRobot {
         Console.printHeader("Robot Initialization");
 
         Console.logMsg("Waiting for NetworkTables Connection...");
-        //Wait for NetworkTables to connect
         Timer tmrNetworkTable = new Timer();
         tmrNetworkTable.restart();
         while(!NetworkTableInstance.getDefault().isConnected() && tmrNetworkTable.get() < 15.0);
         if(!NetworkTableInstance.getDefault().isConnected())
             Console.logErr("NetworkTables failed to connect! Dashboard objects may not work as intended!");
 
+        //Try to start the Driver Camera
         try {
             Console.logMsg("Initializing Driver Camera...");
             camDriver = CameraServer.startAutomaticCapture("Driver Camera", 0);
@@ -88,12 +88,12 @@ public class Robot extends TimedRobot {
     @Override public void testInit() { Test.start(); }
     @Override public void testPeriodic() { Test.periodic(); }
 
-    @Override public void autonomousInit() { Autonomous.onEnable(); }
+    @Override public void autonomousInit() { Autonomous.start(); }
     @Override public void autonomousPeriodic() { Autonomous.periodic(); }
 
-    @Override public void teleopInit() { Teleoperated.onEnable(); }
+    @Override public void teleopInit() { Teleoperated.start(); }
     @Override public void teleopPeriodic() { Teleoperated.periodic(); }
 
-    @Override public void disabledInit() { Disabled.onEnable(); }
+    @Override public void disabledInit() { Disabled.start(); }
     @Override public void disabledPeriodic() { Disabled.periodic(); }
 }

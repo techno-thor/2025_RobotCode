@@ -56,7 +56,7 @@ public class Autonomous {
         DO_NOTHING("-Do Nothing-"),
         /** Default Option. Just prepare for the match: reset systems, etc. but do not move or score. */
         PREPARE_FOR_MATCH("-Prepare for Match-") {
-            @Override public void onEnable() {
+            @Override public void start() {
                 Console.logMsg("Zeroing Elevator...");
                 Manipulator.lowerElevator();
             }},
@@ -108,7 +108,7 @@ public class Autonomous {
          * Call once at the start of Autonomous to prepare each Sequence. 
          * <p><i>Override if more actions are necessary at the start of the Sequence.</i></p>
          */
-        public void onEnable() {
+        public void start() {
             tmrStage.restart();
             mStage = 0;
         }
@@ -151,7 +151,7 @@ public class Autonomous {
     }
 
     /** Call once at the start of Autonomous to pull currently selected options from the Dashboard and prepare the selected Sequence. */
-    public static void onEnable() {
+    public static void start() {
         Console.printHeader("Autonomous Enabled");
 
         //Pull selected options
@@ -180,7 +180,7 @@ public class Autonomous {
 
 
         //OnEnable setup for selected Sequence
-        mSelectedSequence.onEnable();
+        mSelectedSequence.start();
 
         Console.printSeparator();
     }
