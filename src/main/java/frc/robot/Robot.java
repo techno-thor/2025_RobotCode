@@ -96,4 +96,5 @@ public class Robot extends TimedRobot {
 
     @Override public void disabledInit() { Disabled.start(); }
     @Override public void disabledPeriodic() { Disabled.periodic(); }
+    @Override public void disabledExit() { Disabled.end(); }
 }
