@@ -10,7 +10,6 @@ import frc.molib.dashboard.DashboardSelector;
 import frc.molib.hid.XboxController;
 import frc.robot.Robot;
 import frc.robot.subsystem.Chassis;
-import frc.robot.subsystem.Loader;
 import frc.robot.subsystem.Manipulator;
 import frc.robot.subsystem.Manipulator.Position;
 
@@ -111,11 +110,10 @@ public class Teleoperated {
     private static final Button btnDriver_Score = new Button() { public boolean get() { return ctlDriver.getAButton(); }};
 
     //Operator Buttons
-    private static final Button btnOperator_Intake = new Button() { public boolean get() { return ctlOperator.getLeftBumperButton(); }};
     private static final Button btnOperator_Elevator_ManualUp = new Button() { public boolean get() { return ctlOperator.getPOV() == 0; }};
     private static final Button btnOperator_Elevator_ManualDown = new Button() { public boolean get() { return ctlOperator.getPOV() == 180; }};
     private static final Button btnOperator_Elevator_Bottom = new Button() { public boolean get() { return ctlOperator.getAButton(); }};
-    private static final Button btnOperator_Elevator_Trough = new Button() { public boolean get() { return ctlOperator.getBButton(); }};
+    private static final Button btnOperator_Elevator_Level1 = new Button() { public boolean get() { return ctlOperator.getBButton(); }};
     private static final Button btnOperator_Elevator_Level2 = new Button() { public boolean get() { return ctlOperator.getXButton(); }};
     private static final Button btnOperator_Elevator_Level3 = new Button() { public boolean get() { return ctlOperator.getYButton(); }};
     
@@ -207,15 +205,6 @@ public class Teleoperated {
         if(btnDriver_Precision.getReleased())
             Chassis.enableCoastMode();
 
-        //Loader Control
-        if(btnOperator_Intake.get() && Manipulator.isAtBottom() && !Manipulator.isLoaded()) {
-            Loader.enable_Intake();
-            Manipulator.enable_Outtake();
-        } else {
-            Loader.disable_Intake();
-            Manipulator.disable_Outtake();
-        }
-
         //Manual Elevator Control
         if(btnOperator_Elevator_ManualUp.get()) {
             Manipulator.disable_ElevatorPID();
@@ -230,7 +219,7 @@ public class Teleoperated {
         //Automated Elevator Control
         if(btnOperator_Elevator_Bottom.getPressed())
             Manipulator.goToPosition(Position.BOTTOM);
-        if(btnOperator_Elevator_Trough.getPressed())
+        if(btnOperator_Elevator_Level1.getPressed())
             Manipulator.goToPosition(Position.TROUGH);
         if(btnOperator_Elevator_Level2.getPressed())
             Manipulator.goToPosition(Position.LEVEL2);
@@ -245,7 +234,6 @@ public class Teleoperated {
 
         //Subsystem Updates
         Chassis.periodic();
-        Loader.periodic();
         Manipulator.periodic();
     }
 }

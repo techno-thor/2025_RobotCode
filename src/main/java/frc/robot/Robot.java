@@ -17,7 +17,6 @@ import frc.robot.period.Disabled;
 import frc.robot.period.Teleoperated;
 import frc.robot.period.Test;
 import frc.robot.subsystem.Chassis;
-import frc.robot.subsystem.Loader;
 import frc.robot.subsystem.Manipulator;
 
 /**
@@ -37,7 +36,6 @@ public class Robot extends TimedRobot {
     /** Disable all Subsystems; Stop all movement. */
     public static void disableSubsystems() {
         Chassis.disable();
-        Loader.disable();
         Manipulator.disable();
     }
 
@@ -70,7 +68,6 @@ public class Robot extends TimedRobot {
 
         //Initialize Subsystems
         Chassis.init();
-        Loader.init();
         Manipulator.init();
 
         Console.printSeparator();
@@ -81,7 +78,6 @@ public class Robot extends TimedRobot {
         Managers.update();
 
         Chassis.syncDashboardValues();
-        Loader.syncDashboardValues();
         Manipulator.syncDashboardValues();
     }
 

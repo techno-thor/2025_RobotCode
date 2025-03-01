@@ -2,7 +2,7 @@ package frc.robot.subsystem;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.ctre.phoenix6.configs.FeedbackConfigs;
 import com.ctre.phoenix6.configs.MotorOutputConfigs;
 import com.ctre.phoenix6.configs.SoftwareLimitSwitchConfigs;
@@ -51,8 +51,9 @@ public class Manipulator {
     private static final DashboardValue<Boolean> dshElevator_Height_OnTarget = new DashboardValue<Boolean>(tblElevator_Height_PID, "On Target");
 
     //Motors
-    private static final TalonFX mtrElevator = new TalonFX(6);
-    private static final TalonSRX mtrOuttake = new TalonSRX(7);
+    private static final TalonFX mtrElevator = new TalonFX(7);
+    private static final VictorSPX mtrOuttake_L = new VictorSPX(6);
+    private static final VictorSPX mtrOuttake_R = new VictorSPX(7);
 
     //Sensors
     private static DigitalInput phoElevator_T = new DigitalInput(0);
@@ -90,8 +91,11 @@ public class Manipulator {
                 .withReverseSoftLimitThreshold(Position.BOTTOM.getHeight() - 0.25)
                 .withReverseSoftLimitEnable(true)));
 
-        mtrOuttake.setInverted(false);
-        mtrOuttake.setNeutralMode(NeutralMode.Coast);
+        mtrOuttake_L.setInverted(false);
+        mtrOuttake_R.setInverted(true);
+
+        mtrOuttake_L.setNeutralMode(NeutralMode.Coast);
+        mtrOuttake_R.setNeutralMode(NeutralMode.Coast);
 
         Console.logMsg("Configuring PIDs...");
         pidElevator_Height.setTolerance(0.5);
@@ -132,11 +136,14 @@ public class Manipulator {
     /** Disable all PID controls. */
     public static void disable_PIDs() { disable_ElevatorPID(); }
 
+    /** Stop the Elevator motor(s). */
+    public static void disable_Elevator() { 
+        setElevatorPower(0.0); 
+        disable_ElevatorPID();
+    }
+
     /** Disable PID control of the Elevator. */
     public static void disable_ElevatorPID() { pidElevator_Height.disable(); }
-
-    /** Stop the Elevator motor(s). <i>Does not disable PID control.</i> */
-    public static void disable_Elevator() { setElevatorPower(0.0); }
 
     /** Stop the Outtake motor(s).*/
     public static void disable_Outtake() { setOuttakePower(0.0); }
@@ -213,6 +220,6 @@ public class Manipulator {
 
         //Apply power to motors
         mtrElevator.set(mElevatorPower);
-        mtrOuttake.set(ControlMode.PercentOutput, mOuttakePower);
+        mtrOuttake_L.set(ControlMode.PercentOutput, mOuttakePower);
     }
 }

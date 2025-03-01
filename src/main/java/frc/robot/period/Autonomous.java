@@ -9,7 +9,6 @@ import frc.molib.dashboard.DashboardOptionBase;
 import frc.molib.dashboard.DashboardSelector;
 import frc.robot.Robot;
 import frc.robot.subsystem.Chassis;
-import frc.robot.subsystem.Loader;
 import frc.robot.subsystem.Manipulator;
 
 /** Controls the Robot through pre-programmed sequences during the Autonomous game period */
@@ -191,7 +190,6 @@ public class Autonomous {
 
         //Subsystem Updates
         Chassis.periodic();
-        Loader.periodic();
         Manipulator.periodic();
     }
 }
